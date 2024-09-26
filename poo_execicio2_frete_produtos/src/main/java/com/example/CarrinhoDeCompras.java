@@ -5,6 +5,6 @@ import java.util.List;
 
 public class CarrinhoDeCompras {
 
-    List<Produto> = new ArrayList<>;
+    // List<Produto> = new ArrayList<>;
 
 }

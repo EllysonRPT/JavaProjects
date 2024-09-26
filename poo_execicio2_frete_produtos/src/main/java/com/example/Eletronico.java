@@ -1,19 +1,24 @@
 package com.example;
 
-public class Eletronico extends Produto {
-//atributo
+public class Eletronico extends Produto implements Transportavel {
+    // atributo
+    private double volume;
+    // construtor
 
-    private double peso;
-//construtor
-
-    public Eletronico(String nome, double peso, double preco) {
-        super();
-        this.peso=peso;
-        this.preco=preco;
+    public Eletronico(String nome, double preco, double volume) {
+        super(nome, preco);
+        this.volume = volume;
 
     }
 
+    @Override
+    public double calcularPeso() {
+        double peso = volume * 1.5;
+        return peso;
+    }
+@Override
     public double calcularFrete() {
-        return 0;
-    }
+       double valorFrete = calcularPeso()*2;
+       return valorFrete;
+    };
 }
