@@ -1,0 +1,23 @@
+CREATE TABLE PRODUTOS (
+    ID SERIAL PRIMARY KEY,
+    NOME VARCHAR(100) NOT NULL,
+   preco DECIMAL(10, 2) NOT NULL
+
+);
+INSERT INTO Produtos (nome, preco) VALUES
+('Produto A', 19.99),
+('Produto B', 29.50),
+('Produto C', 15.00);
+
+ORDENADO CRECENTE
+preço maior
+SELECT *
+FROM Produtos
+ORDER BY preco DESC
+LIMIT 1;
+
+ORDENADO DECRECENTE
+SELECT *
+FROM Produtos
+ORDER BY preco ASC
+LIMIT 1;
