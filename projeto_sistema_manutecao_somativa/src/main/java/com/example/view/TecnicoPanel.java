@@ -24,7 +24,7 @@ public class TecnicoPanel extends JPanel {
         }, 0);
 
         tecnicoTable = new JTable(tableModel);
-        List<Tecnico> tecnicos = tecnicoController.readTecnicos();
+        List<Tecnico> tecnicos = tecnicoController.readtecnicos();
         for (Tecnico tecnico : tecnicos) {
             tableModel.addRow(new Object[]{
                     tecnico.getId(),

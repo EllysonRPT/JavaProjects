@@ -19,7 +19,7 @@ public class FalhaController {
     }
 
     // LIstar
-     List<Falha> readfalhas() {
+    public List<Falha> readfalhas() {
         // for (falha falha : falhas) {
         // System.out.println(falha.getID() + " - " + falha.getNome());
         // }

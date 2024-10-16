@@ -24,7 +24,7 @@ public class FalhaPanel extends JPanel {
         }, 0);
 
         falhaTable = new JTable(tableModel);
-        List<Falha> falhas = falhaController.readFalhas();
+        List<Falha> falhas = falhaController.readfalhas();
         for (Falha falha : falhas) {
             tableModel.addRow(new Object[]{
                     falha.getId(),

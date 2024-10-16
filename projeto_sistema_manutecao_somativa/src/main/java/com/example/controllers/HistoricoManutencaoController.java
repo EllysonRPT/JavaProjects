@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.api.HistoricoManutencaoApi;
-import com.example.api.HistoricoManutencaoApi;
+import com.example.models.HistoricoManutencao;
 import com.example.models.HistoricoManutencao;
 
 public class HistoricoManutencaoController {
-     private List<HistoricoManutencao> historicoManutencaos;
+       private List<HistoricoManutencao> historicoManutencaos;
 
     public HistoricoManutencaoController() {
 
@@ -17,21 +17,22 @@ public class HistoricoManutencaoController {
     }
 
     // LIstar
-    public List<HistoricoManutencao> readhistoricoManutencaos() {
-        // for (historicoManutencao historicoManutencao : historicoManutencaos) {
-        // System.out.println(historicoManutencao.getID() + " - " + historicoManutencao.getNome());
+     public List<HistoricoManutencao> readHistoricoManutencaos() {
+        // for (HistoricoManutencao HistoricoManutencao : HistoricoManutencaos) {
+        // System.out.println(HistoricoManutencao.getID() + " - " + HistoricoManutencao.getNome());
         // }
         historicoManutencaos = HistoricoManutencaoApi.gethistoricoManutencaos();
+        
         return historicoManutencaos;
     }
 
-    public void addhistoricoManutencao(HistoricoManutencao historicoManutencao) {
-        historicoManutencaos.add(historicoManutencao);
+    public void addHistoricoManutencao(HistoricoManutencao HistoricoManutencao) {
+        historicoManutencaos.add(HistoricoManutencao);
     }
 
-    public void updatehistoricoManutencao(int posicao, HistoricoManutencao historicoManutencao) {
+    public void updateHistoricoManutencao(int posicao, HistoricoManutencao HistoricoManutencao) {
 
-historicoManutencaos.set(posicao, historicoManutencao);
+        historicoManutencaos.set(posicao, HistoricoManutencao);
     }
 
     public void delete(int posicao) {

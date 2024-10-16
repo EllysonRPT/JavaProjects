@@ -3,13 +3,15 @@ package com.example.view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import com.example.controllers.ManutencaoController;
+
+import com.example.controllers.HistoricoManutencaoController;
+import com.example.controllers.HistoricoManutencaoController;
 import com.example.models.HistoricoManutencao;
 
 import java.util.List;
 
 public class ManutencaoPanel extends JPanel {
-    private ManutencaoController manutencaoController;
+    private HistoricoManutencaoController manutencaoController;
     private JTable manutencaoTable;
     private DefaultTableModel tableModel;
     private JButton btnCadastrarManutencao;
@@ -17,14 +19,14 @@ public class ManutencaoPanel extends JPanel {
 
     public ManutencaoPanel() {
         super(new BorderLayout());
-        manutencaoController = new ManutencaoController();
+        manutencaoController = new HistoricoManutencaoController();
 
         tableModel = new DefaultTableModel(new Object[]{
                 "Id", "Máquina Id", "Data", "Tipo", "Pecas Trocadas", "Tempo de Parada", "Técnico Id", "Observações"
         }, 0);
 
         manutencaoTable = new JTable(tableModel);
-        List<HistoricoManutencao> manutencoes = manutencaoController.readManutencoes();
+        List<HistoricoManutencao> manutencoes = manutencaoController.readHistoricoManutencaos();
         for (HistoricoManutencao manutencao : manutencoes) {
             tableModel.addRow(new Object[]{
                     manutencao.getId(),

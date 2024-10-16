@@ -2,15 +2,87 @@
   "maquinas": [
     {
       "id": "1",
-      "codigo": "M001",
-      "nome": "Torno CNC",
-      "modelo": "CNC 3000",
-      "fabricante": "Siemens",
-      "dataAquisicao": "2020-01-10",
-      "tempoVidaEstimado": 10,
-      "localizacao": "Linha 1",
-      "detalhes": "Operação em alta precisão",
-      "manual": "URL do manual"
+      "tempoVidaEstimado": 10000,
+      "codigo": "C001",
+      "localizacao": "Localização A",
+      "nome": "Escavadeira",
+      "fabricante": "Fabricante Y",
+      "manual": "Manual A",
+      "modelo": "Model X",
+      "dataAquisicao": "2024-10-10",
+      "detalhes": "Detalhes A"
+    },
+    {
+      "id": "1",
+      "tempoVidaEstimado": 10000,
+      "codigo": "C001",
+      "localizacao": "Localização A",
+      "nome": "Escavadeira",
+      "fabricante": "Fabricante Y",
+      "manual": "Manual A",
+      "modelo": "Model X",
+      "dataAquisicao": "2024-10-10",
+      "detalhes": "Detalhes A"
+    },
+    {
+      "id": "ss",
+      "tempoVidaEstimado": 11111,
+      "codigo": "ss",
+      "localizacao": "2222",
+      "nome": "ss",
+      "fabricante": "sss",
+      "manual": "22",
+      "modelo": "ssssss",
+      "dataAquisicao": "2222-01-01",
+      "detalhes": "2222"
+    },
+    {
+      "tempoVidaEstimado": 222222,
+      "codigo": "5545",
+      "localizacao": "a",
+      "nome": "r5ggg",
+      "id": "4554",
+      "fabricante": "hfhdg",
+      "manual": "a",
+      "modelo": "gdh",
+      "dataAquisicao": "2000-04-30",
+      "detalhes": "a"
+    },
+    {
+      "id": "4554",
+      "tempoVidaEstimado": 222222,
+      "codigo": "5545",
+      "localizacao": "kjkjbkbk",
+      "nome": "r5ggg",
+      "fabricante": "hfhdg",
+      "manual": "kjbkjbb",
+      "modelo": "gdh",
+      "dataAquisicao": "2000-04-30",
+      "detalhes": "kbkjbkb"
+    },
+    {
+      "tempoVidaEstimado": 222,
+      "codigo": "3333212",
+      "localizacao": "uuuudccc",
+      "nome": "uuuu",
+      "id": "33",
+      "fabricante": "uuuuuuu",
+      "manual": "ddd",
+      "modelo": "uu",
+      "dataAquisicao": "2020-02-22",
+      "detalhes": "dcdduuu"
+    },
+    {
+      "id": "33",
+      "tempoVidaEstimado": 222,
+      "codigo": "3333212",
+      "localizacao": "dccc",
+      "nome": "dsas",
+      "fabricante": "dfasdf",
+      "manual": "ddd",
+      "modelo": "dsafds",
+      "dataAquisicao": "2020-02-22",
+      "detalhes": "dcdd"
     }
   ],
   "historicoManutencao": [

@@ -23,7 +23,7 @@ public class SistemaManutecaoGUI extends JFrame {
     public SistemaManutecaoGUI() {
         // configuração
         super("SistemaManutecao");
-        this.setSize(400, 300);
+        this.setSize(1000, 500);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
