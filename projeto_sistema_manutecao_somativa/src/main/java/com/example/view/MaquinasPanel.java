@@ -20,6 +20,7 @@ public class MaquinasPanel extends JPanel {
     private DefaultTableModel tableModel;
     private JButton btnAlterar;
     private JButton btnCadastrarMaquina;
+    private JButton btnExcluir;
 
     public MaquinasPanel() {
         super(new BorderLayout());
@@ -38,19 +39,22 @@ public class MaquinasPanel extends JPanel {
 
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarMaquina = new JButton("Cadastrar");
-        btnAlterar = new JButton("Alterar"); // Renomeado
+        btnAlterar = new JButton("Alterar");
+        btnExcluir = new JButton("Excluir");
 
         painelInferior.add(btnCadastrarMaquina);
-        painelInferior.add(btnAlterar); // Adicionado botão "Alterar"
+        painelInferior.add(btnAlterar);
+        painelInferior.add(btnExcluir);
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Action Listeners
         btnCadastrarMaquina.addActionListener(e -> cadastrarMaquina());
         btnAlterar.addActionListener(e -> salvarAlteracoes());
+        btnExcluir.addActionListener(e -> excluirMaquina());
     }
 
     private void carregarMaquinas() {
-        tableModel.setRowCount(0); // Limpa a tabela antes de carregar
+        tableModel.setRowCount(0);
         List<Maquina> maquinas = maquinaController.readMaquinas();
         for (Maquina maquina : maquinas) {
             tableModel.addRow(new Object[]{
@@ -59,7 +63,7 @@ public class MaquinasPanel extends JPanel {
                 maquina.getNome(),
                 maquina.getModelo(),
                 maquina.getFabricante(),
-                maquina.getDataAquisicao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), // Formatação da data
+                maquina.getDataAquisicao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 maquina.getTempoVidaEstimado(),
                 maquina.getLocalizacao(),
                 maquina.getDetalhes(),
@@ -69,13 +73,11 @@ public class MaquinasPanel extends JPanel {
     }
 
     private void cadastrarMaquina() {
-        // Exibe o JDialog para inserir os dados
         JDialog dialog = new JDialog((Frame) null, "Inserir Máquina", true);
-        dialog.setLayout(new GridLayout(11, 2)); // Aumentado para 11 linhas
+        dialog.setLayout(new GridLayout(11, 2));
 
-        // Criar campos de texto e rótulos
         JLabel idLabel = new JLabel("Id:");
-        JTextField idField = new JTextField(); // Novo campo para ID
+        JTextField idField = new JTextField();
         JLabel codigoLabel = new JLabel("Código:");
         JTextField codigoField = new JTextField();
         JLabel nomeLabel = new JLabel("Nome:");
@@ -85,7 +87,7 @@ public class MaquinasPanel extends JPanel {
         JLabel fabricanteLabel = new JLabel("Fabricante:");
         JTextField fabricanteField = new JTextField();
         JLabel dataAquisicaoLabel = new JLabel("Data de Aquisição (dd-MM-yyyy):");
-        JFormattedTextField dataAquisicaoField = createFormattedDateField(); // Campo formatado para a data
+        JFormattedTextField dataAquisicaoField = createFormattedDateField();
         JLabel tempoVidaLabel = new JLabel("Tempo de Vida Estimado:");
         JTextField tempoVidaField = new JTextField();
         JLabel localizacaoLabel = new JLabel("Localização:");
@@ -95,11 +97,9 @@ public class MaquinasPanel extends JPanel {
         JLabel manualLabel = new JLabel("Manual:");
         JTextField manualField = new JTextField();
 
-        // Botões de ação
         JButton okButton = new JButton("OK");
         JButton cancelarButton = new JButton("Cancelar");
 
-        // Adicionar componentes ao diálogo
         dialog.add(idLabel);
         dialog.add(idField);
         dialog.add(codigoLabel);
@@ -126,41 +126,27 @@ public class MaquinasPanel extends JPanel {
         dialog.pack();
         dialog.setLocationRelativeTo(null);
 
-        // Ação do botão "Cancelar"
         cancelarButton.addActionListener(e -> dialog.dispose());
 
-        // Ação do botão "OK"
         okButton.addActionListener(e -> {
             try {
-                // Coletar dados dos campos
-                String idText = idField.getText(); // Obter ID
+                String idText = idField.getText();
                 String codigo = codigoField.getText();
                 String nome = nomeField.getText();
                 String modelo = modeloField.getText();
                 String fabricante = fabricanteField.getText();
                 String dataAquisicaoText = dataAquisicaoField.getText();
-                
-                // Converter a data usando o formato dd-MM-yyyy
                 LocalDate dataAquisicao = LocalDate.parse(dataAquisicaoText, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                
                 int tempoVidaEstimado = Integer.parseInt(tempoVidaField.getText());
                 String localizacao = localizacaoField.getText();
                 String detalhes = detalhesField.getText();
                 String manual = manualField.getText();
 
-                // Criar uma nova máquina com os dados coletados
-                Maquina novaMaquina = new Maquina(
-                    idText, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, manual
-                );
+                Maquina novaMaquina = new Maquina(idText, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, manual);
 
-                // Adicionar a máquina ao controlador
                 maquinaController.addMaquina(novaMaquina);
                 MaquinaApi.createMaquina(novaMaquina);
-
-                // Recarregar a tabela
                 carregarMaquinas();
-
-                // Fechar o diálogo
                 dialog.dispose();
             } catch (DateTimeParseException dtpe) {
                 JOptionPane.showMessageDialog(dialog, "Data de Aquisição inválida! Formato esperado: dd-MM-yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -172,118 +158,73 @@ public class MaquinasPanel extends JPanel {
         dialog.setVisible(true);
     }
 
-    // Método para criar um JFormattedTextField para entrada de data
-    private JFormattedTextField createFormattedDateField() {
-        try {
-            MaskFormatter dateFormatter = new MaskFormatter("##-##-####");
-            dateFormatter.setPlaceholderCharacter('_');
-            return new JFormattedTextField(dateFormatter);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new JFormattedTextField();
-        }
-    }
-
     private void salvarAlteracoes() {
         int selectedRow = maquinasTable.getSelectedRow();
         if (selectedRow != -1) {
-            // Exibe o JDialog para editar os dados
-            JDialog dialog = new JDialog((Frame) null, "Atualizar Máquina", true);
-            dialog.setLayout(new GridLayout(11, 2)); // Aumentado para 11 linhas
+            JDialog dialog = new JDialog((Frame) null, "Alterar Máquina", true);
+            dialog.setLayout(new GridLayout(11, 2));
 
-            // Obter a máquina selecionada
-            Maquina maquinaSelecionada = maquinaController.readMaquinas().get(selectedRow);
+            String id = tableModel.getValueAt(selectedRow, 0).toString();
+            JTextField codigoField = new JTextField(tableModel.getValueAt(selectedRow, 1).toString());
+            JTextField nomeField = new JTextField(tableModel.getValueAt(selectedRow, 2).toString());
+            JTextField modeloField = new JTextField(tableModel.getValueAt(selectedRow, 3).toString());
+            JTextField fabricanteField = new JTextField(tableModel.getValueAt(selectedRow, 4).toString());
+            JTextField dataAquisicaoField = new JTextField(tableModel.getValueAt(selectedRow, 5).toString());
+            JTextField tempoVidaField = new JTextField(tableModel.getValueAt(selectedRow, 6).toString());
+            JTextField localizacaoField = new JTextField(tableModel.getValueAt(selectedRow, 7).toString());
+            JTextField detalhesField = new JTextField(tableModel.getValueAt(selectedRow, 8).toString());
+            JTextField manualField = new JTextField(tableModel.getValueAt(selectedRow, 9).toString());
 
-            // Criar campos de texto e rótulos
-            JLabel idLabel = new JLabel("Id:");
-            JTextField idField = new JTextField(maquinaSelecionada.getId()); // Pré-preencher ID
-            idField.setEditable(false); // Não permite edição do ID
-            JLabel codigoLabel = new JLabel("Código:");
-            JTextField codigoField = new JTextField(maquinaSelecionada.getCodigo());
-            JLabel nomeLabel = new JLabel("Nome:");
-            JTextField nomeField = new JTextField(maquinaSelecionada.getNome());
-            JLabel modeloLabel = new JLabel("Modelo:");
-            JTextField modeloField = new JTextField(maquinaSelecionada.getModelo());
-            JLabel fabricanteLabel = new JLabel("Fabricante:");
-            JTextField fabricanteField = new JTextField(maquinaSelecionada.getFabricante());
-            JLabel dataAquisicaoLabel = new JLabel("Data de Aquisição (dd-MM-yyyy):");
-            JFormattedTextField dataAquisicaoField = createFormattedDateField(); // Campo formatado para a data
-            dataAquisicaoField.setText(maquinaSelecionada.getDataAquisicao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))); // Pré-preencher a data
-            JLabel tempoVidaLabel = new JLabel("Tempo de Vida Estimado:");
-            JTextField tempoVidaField = new JTextField(String.valueOf(maquinaSelecionada.getTempoVidaEstimado()));
-            JLabel localizacaoLabel = new JLabel("Localização:");
-            JTextField localizacaoField = new JTextField(maquinaSelecionada.getLocalizacao());
-            JLabel detalhesLabel = new JLabel("Detalhes:");
-            JTextField detalhesField = new JTextField(maquinaSelecionada.getDetalhes());
-            JLabel manualLabel = new JLabel("Manual:");
-            JTextField manualField = new JTextField(maquinaSelecionada.getManual());
+            dialog.add(new JLabel("Id:"));
+            dialog.add(new JLabel(id));
+            dialog.add(new JLabel("Código:"));
+            dialog.add(codigoField);
+            dialog.add(new JLabel("Nome:"));
+            dialog.add(nomeField);
+            dialog.add(new JLabel("Modelo:"));
+            dialog.add(modeloField);
+            dialog.add(new JLabel("Fabricante:"));
+            dialog.add(fabricanteField);
+            dialog.add(new JLabel("Data de Aquisição (dd-MM-yyyy):"));
+            dialog.add(dataAquisicaoField);
+            dialog.add(new JLabel("Tempo de Vida Estimado:"));
+            dialog.add(tempoVidaField);
+            dialog.add(new JLabel("Localização:"));
+            dialog.add(localizacaoField);
+            dialog.add(new JLabel("Detalhes:"));
+            dialog.add(detalhesField);
+            dialog.add(new JLabel("Manual:"));
+            dialog.add(manualField);
 
-            // Botões de ação
             JButton okButton = new JButton("OK");
             JButton cancelarButton = new JButton("Cancelar");
 
-            // Adicionar componentes ao diálogo
-            dialog.add(idLabel);
-            dialog.add(idField);
-            dialog.add(codigoLabel);
-            dialog.add(codigoField);
-            dialog.add(nomeLabel);
-            dialog.add(nomeField);
-            dialog.add(modeloLabel);
-            dialog.add(modeloField);
-            dialog.add(fabricanteLabel);
-            dialog.add(fabricanteField);
-            dialog.add(dataAquisicaoLabel);
-            dialog.add(dataAquisicaoField);
-            dialog.add(tempoVidaLabel);
-            dialog.add(tempoVidaField);
-            dialog.add(localizacaoLabel);
-            dialog.add(localizacaoField);
-            dialog.add(detalhesLabel);
-            dialog.add(detalhesField);
-            dialog.add(manualLabel);
-            dialog.add(manualField);
             dialog.add(okButton);
             dialog.add(cancelarButton);
 
             dialog.pack();
             dialog.setLocationRelativeTo(null);
 
-            // Ação do botão "Cancelar"
             cancelarButton.addActionListener(e -> dialog.dispose());
 
-            // Ação do botão "OK"
             okButton.addActionListener(e -> {
                 try {
-                    // Coletar dados dos campos
-                    String idText = idField.getText(); // Obter ID
                     String codigo = codigoField.getText();
                     String nome = nomeField.getText();
                     String modelo = modeloField.getText();
                     String fabricante = fabricanteField.getText();
                     String dataAquisicaoText = dataAquisicaoField.getText();
-                    
-                    // Converter a data usando o formato dd-MM-yyyy
                     LocalDate dataAquisicao = LocalDate.parse(dataAquisicaoText, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                    
                     int tempoVidaEstimado = Integer.parseInt(tempoVidaField.getText());
                     String localizacao = localizacaoField.getText();
                     String detalhes = detalhesField.getText();
                     String manual = manualField.getText();
 
-                    // Criar uma nova máquina com os dados coletados
-                    Maquina maquinaAtualizada = new Maquina(
-                        idText, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, manual
-                    );
+                    Maquina maquinaAtualizada = new Maquina(id, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, manual);
 
-                    // Atualizar a máquina no controlador
-                    maquinaController.updateMaquina(selectedRow, maquinaSelecionada);
+                    maquinaController.updateMaquina(selectedRow, maquinaAtualizada);
                     MaquinaApi.updateMaquina(maquinaAtualizada);
-
-                    // Recarregar a tabela
                     carregarMaquinas();
-
-                    // Fechar o diálogo
                     dialog.dispose();
                 } catch (DateTimeParseException dtpe) {
                     JOptionPane.showMessageDialog(dialog, "Data de Aquisição inválida! Formato esperado: dd-MM-yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -294,7 +235,31 @@ public class MaquinasPanel extends JPanel {
 
             dialog.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma máquina para alterar.", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, selecione uma linha da tabela para alterar.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    private void excluirMaquina() {
+        int selectedRow = maquinasTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String id = tableModel.getValueAt(selectedRow, 0).toString();
+            maquinaController.deleteMaquina(selectedRow);
+            MaquinaApi.deleteMaquina(id);
+            carregarMaquinas();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione uma linha da tabela para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private JFormattedTextField createFormattedDateField() {
+        JFormattedTextField formattedTextField = null;
+        try {
+            MaskFormatter maskFormatter = new MaskFormatter("##-##-####");
+            maskFormatter.setPlaceholderCharacter('_');
+            formattedTextField = new JFormattedTextField(maskFormatter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return formattedTextField;
     }
 }

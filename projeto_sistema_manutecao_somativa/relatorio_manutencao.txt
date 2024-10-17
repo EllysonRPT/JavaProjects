@@ -1,0 +1,6 @@
+Relatório de Manutenção
+=======================
+Id	Máquina Id	Data	Tipo	Peças Trocadas	Tempo de Parada	Técnico Id	Observações	
+1	1	2024-10-07	Preventiva	Correia	4	JoÃ£o Silva	SubstituiÃ§Ã£o preventiva da correia.	
+2	1	2024-11-07	Corretiva	Correia	10	AndrÃ©	SubstituiÃ§Ã£o corretiva do motor.	
+11	11	2001-11-11	todes	jjjj	222	66	please	

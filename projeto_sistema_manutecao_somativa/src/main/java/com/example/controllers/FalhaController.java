@@ -10,34 +10,34 @@ import com.example.models.Falha;
  * FalhaController
  */
 public class FalhaController {
-  private List<Falha> falhas;
+    private List<Falha> falhas;
 
     public FalhaController() {
-
         falhas = new ArrayList<>();
-
     }
 
-    // LIstar
-    public List<Falha> readfalhas() {
-        // for (falha falha : falhas) {
-        // System.out.println(falha.getID() + " - " + falha.getNome());
-        // }
-        falhas = FalhaApi.getfalhas();
+    // Listar
+    public List<Falha> readFalhas() {
+        falhas = FalhaApi.getfalhas(); // Obtém a lista de falhas da API
         return falhas;
     }
 
-    public void addfalha(Falha falha) {
-        falhas.add(falha);
+    public void addFalha(Falha falha) {
+        FalhaApi.createFalha(falha); // Adiciona a nova falha usando a API
+        falhas.add(falha); // Adiciona a falha à lista local
     }
 
-    public void updatefalha(int posicao, Falha falha) {
-
-falhas.set(posicao, falha);
+    public void updateFalha( Falha falha) {
+        // Atualiza a falha pelo ID
+        FalhaApi.updateFalha( falha); 
+        for (int i = 0; i < falhas.size(); i++) {
+            if (falhas.get(i).getId().equals(falha.getId())) {
+               // Atualiza a falha na API
+                falhas.set(i, falha); // Atualiza a falha na lista local
+                return; // Saia do método após a atualização
+            }
+        }
+        // Se o ID não for encontrado, pode-se lançar uma exceção ou simplesmente ignorar
+        System.out.println("Falha com ID " + falha.getId() + " não encontrada.");
     }
-
-    public void delete(int posicao) {
-        falhas.remove(posicao);
-}
-    
 }

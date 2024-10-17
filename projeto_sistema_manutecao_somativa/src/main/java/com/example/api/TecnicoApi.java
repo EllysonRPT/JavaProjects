@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.example.models.Tecnico;
 
 public class TecnicoApi {
-     public static List<Tecnico> gettecnicos() {
+     public static List<Tecnico> getTecnicos() {
         String json = ApiConnection.getData("tecnicos");
         List<Tecnico> tecnicos = new ArrayList<>();
 

@@ -13,18 +13,6 @@
       "detalhes": "Detalhes A"
     },
     {
-      "id": "1",
-      "tempoVidaEstimado": 10000,
-      "codigo": "C001",
-      "localizacao": "Localização A",
-      "nome": "Escavadeira",
-      "fabricante": "Fabricante Y",
-      "manual": "Manual A",
-      "modelo": "Model X",
-      "dataAquisicao": "2024-10-10",
-      "detalhes": "Detalhes A"
-    },
-    {
       "id": "ss",
       "tempoVidaEstimado": 11111,
       "codigo": "ss",
@@ -35,18 +23,6 @@
       "modelo": "ssssss",
       "dataAquisicao": "2222-01-01",
       "detalhes": "2222"
-    },
-    {
-      "tempoVidaEstimado": 222222,
-      "codigo": "5545",
-      "localizacao": "a",
-      "nome": "r5ggg",
-      "id": "4554",
-      "fabricante": "hfhdg",
-      "manual": "a",
-      "modelo": "gdh",
-      "dataAquisicao": "2000-04-30",
-      "detalhes": "a"
     },
     {
       "id": "4554",
@@ -61,18 +37,6 @@
       "detalhes": "kbkjbkb"
     },
     {
-      "tempoVidaEstimado": 222,
-      "codigo": "3333212",
-      "localizacao": "uuuudccc",
-      "nome": "uuuu",
-      "id": "33",
-      "fabricante": "uuuuuuu",
-      "manual": "ddd",
-      "modelo": "uu",
-      "dataAquisicao": "2020-02-22",
-      "detalhes": "dcdduuu"
-    },
-    {
       "id": "33",
       "tempoVidaEstimado": 222,
       "codigo": "3333212",
@@ -83,6 +47,42 @@
       "modelo": "dsafds",
       "dataAquisicao": "2020-02-22",
       "detalhes": "dcdd"
+    },
+    {
+      "tempoVidaEstimado": 111,
+      "codigo": "s",
+      "localizacao": "111",
+      "nome": "111",
+      "id": "sss",
+      "fabricante": "111",
+      "manual": "11",
+      "modelo": "11",
+      "dataAquisicao": "2001-11-11",
+      "detalhes": "11"
+    },
+    {
+      "id": "sss",
+      "tempoVidaEstimado": 111,
+      "codigo": "ssss",
+      "localizacao": "111",
+      "nome": "111",
+      "fabricante": "111",
+      "manual": "11",
+      "modelo": "11",
+      "dataAquisicao": "2001-11-11",
+      "detalhes": "11"
+    },
+    {
+      "id": "222",
+      "tempoVidaEstimado": 22,
+      "codigo": "www",
+      "localizacao": "ww",
+      "nome": "22",
+      "fabricante": "www",
+      "manual": "ww",
+      "modelo": "www",
+      "dataAquisicao": "2020-11-11",
+      "detalhes": "ww"
     }
   ],
   "historicoManutencao": [
@@ -105,6 +105,16 @@
       "tempoDeParada": 10,
       "tecnicoId": "André",
       "observacoes": "Substituição corretiva do motor."
+    },
+    {
+      "id": "11",
+      "tempoDeParada": 222,
+      "observacoes": "please",
+      "tipo": "todes",
+      "data": "2001-11-11",
+      "maquinaId": 11,
+      "pecasTrocadas": "jjjj",
+      "tecnicoId": "66"
     }
   ],
   "falhas": [
@@ -123,6 +133,14 @@
       "problema": "Falha na Correia",
       "prioridade": "Média",
       "operador": "Luis Carlos"
+    },
+    {
+      "data": "2022-11-11",
+      "prioridade": "termina",
+      "maquinaId": 888,
+      "problema": "na api? funcionou",
+      "id": "777",
+      "operador": "nao sei"
     }
   ],
   "tecnicos": [

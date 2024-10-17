@@ -25,9 +25,11 @@ public class MaquinaController {
         MaquinaApi.updateMaquina(maquina); // Chama a API para atualizar a máquina
         maquinas.set(posicao, maquina); // Atualiza a lista local
     }
-
-    public void delete(int posicao) {
-        // Aqui você também pode chamar a API para deletar a máquina, se necessário
-        maquinas.remove(posicao);
+    public void deleteMaquina(int posicao) {
+        if (posicao >= 0 && posicao < maquinas.size()) {
+            Maquina maquina = maquinas.get(posicao);
+            MaquinaApi.deleteMaquina(maquina.getId()); // Chama a API para deletar a máquina
+            maquinas.remove(posicao); // Remove da lista local
+        }
     }
 }

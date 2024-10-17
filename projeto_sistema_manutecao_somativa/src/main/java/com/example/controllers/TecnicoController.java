@@ -5,37 +5,44 @@ import java.util.List;
 
 import com.example.api.TecnicoApi;
 import com.example.models.Tecnico;
-import com.example.models.Tecnico;
 
 public class TecnicoController {
-       private List<Tecnico> tecnicos;
+    private List<Tecnico> tecnicos;
 
     public TecnicoController() {
-
         tecnicos = new ArrayList<>();
-
     }
 
-    // LIstar
-     public List<Tecnico> readtecnicos() {
-        // for (tecnico tecnico : tecnicos) {
-        // System.out.println(tecnico.getID() + " - " + tecnico.getNome());
-        // }
-        tecnicos = TecnicoApi.gettecnicos();
-        
+    // Listar
+    public List<Tecnico> readTecnicos() {
+        tecnicos = TecnicoApi.getTecnicos(); // Obtém a lista de técnicos da API
         return tecnicos;
     }
 
-    public void addtecnico(Tecnico tecnico) {
-        tecnicos.add(tecnico);
+    // Adicionar técnico
+    public void addTecnico(Tecnico tecnico) {
+        TecnicoApi.createTecnico(tecnico); // Adiciona o técnico usando a API
+        tecnicos.add(tecnico); // Adiciona o técnico à lista local
     }
 
-    public void updatetecnico(int posicao, Tecnico tecnico) {
-
-        tecnicos.set(posicao, tecnico);
+    // Atualizar técnico
+    public void updateTecnico(Tecnico tecnico) {
+        // Atualiza o técnico pelo ID
+        TecnicoApi.updateTecnico(tecnico); 
+        for (int i = 0; i < tecnicos.size(); i++) {
+            if (tecnicos.get(i).getId().equals(tecnico.getId())) {
+                // Atualiza o técnico na API
+                tecnicos.set(i, tecnico); // Atualiza o técnico na lista local
+                return; // Saia do método após a atualização
+            }
+        }
+        // Se o ID não for encontrado, pode-se lançar uma exceção ou simplesmente ignorar
+        System.out.println("Técnico com ID " + tecnico.getId() + " não encontrado.");
     }
-
-    public void delete(int posicao) {
-        tecnicos.remove(posicao);
-}
+    
+    // Remover técnico
+    public void deleteTecnico(String tecnicoId) {
+        TecnicoApi.deleteTecnico(tecnicoId); // Remove o técnico da API
+        tecnicos.removeIf(tecnico -> tecnico.getId().equals(tecnicoId)); // Remove da lista local
+    }
 }
