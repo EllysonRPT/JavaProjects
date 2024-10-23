@@ -20,6 +20,7 @@ public class MaquinasPanel extends JPanel {
     private DefaultTableModel tableModel;
     private JButton btnAlterar;
     private JButton btnCadastrarMaquina;
+    private JButton btnExcluir;
 
     public MaquinasPanel() {
         super(new BorderLayout());
@@ -39,14 +40,17 @@ public class MaquinasPanel extends JPanel {
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarMaquina = new JButton("Cadastrar");
         btnAlterar = new JButton("Alterar");
+        btnExcluir = new JButton("Excluir");
 
         painelInferior.add(btnCadastrarMaquina);
         painelInferior.add(btnAlterar);
+        painelInferior.add(btnExcluir);
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Action Listeners
         btnCadastrarMaquina.addActionListener(e -> cadastrarMaquina());
         btnAlterar.addActionListener(e -> salvarAlteracoes());
+        btnExcluir.addActionListener(e -> excluirMaquina());
     }
 
     private void carregarMaquinas() {
@@ -126,6 +130,15 @@ public class MaquinasPanel extends JPanel {
 
         okButton.addActionListener(e -> {
             try {
+                // Validação de campos obrigatórios
+                if (idField.getText().isEmpty() || codigoField.getText().isEmpty() ||
+                    nomeField.getText().isEmpty() || modeloField.getText().isEmpty() ||
+                    fabricanteField.getText().isEmpty() || tempoVidaField.getText().isEmpty() ||
+                    localizacaoField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(dialog, "Todos os campos obrigatórios devem ser preenchidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 String idText = idField.getText();
                 String codigo = codigoField.getText();
                 String nome = nomeField.getText();
@@ -148,6 +161,8 @@ public class MaquinasPanel extends JPanel {
                 JOptionPane.showMessageDialog(dialog, "Data de Aquisição inválida! Formato esperado: dd-MM-yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(dialog, "Valor inválido para o tempo de vida estimado! Por favor, insira um número.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(dialog, "Ocorreu um erro inesperado: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -205,6 +220,14 @@ public class MaquinasPanel extends JPanel {
 
             okButton.addActionListener(e -> {
                 try {
+                    // Validação de campos obrigatórios
+                    if (codigoField.getText().isEmpty() || nomeField.getText().isEmpty() ||
+                        modeloField.getText().isEmpty() || fabricanteField.getText().isEmpty() ||
+                        tempoVidaField.getText().isEmpty() || localizacaoField.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(dialog, "Todos os campos obrigatórios devem ser preenchidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
                     String codigo = codigoField.getText();
                     String nome = nomeField.getText();
                     String modelo = modeloField.getText();
@@ -226,12 +249,26 @@ public class MaquinasPanel extends JPanel {
                     JOptionPane.showMessageDialog(dialog, "Data de Aquisição inválida! Formato esperado: dd-MM-yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
                 } catch (NumberFormatException nfe) {
                     JOptionPane.showMessageDialog(dialog, "Valor inválido para o tempo de vida estimado! Por favor, insira um número.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(dialog, "Ocorreu um erro inesperado: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             });
 
             dialog.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, selecione uma linha da tabela para alterar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void excluirMaquina() {
+        int selectedRow = maquinasTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String id = tableModel.getValueAt(selectedRow, 0).toString();
+            maquinaController.deleteMaquina(selectedRow);
+            MaquinaApi.deleteMaquina(id);
+            carregarMaquinas();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione uma linha da tabela para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
 
